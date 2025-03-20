@@ -5,9 +5,9 @@ use tauri::{
 
 pub use models::*;
 
-#[cfg(desktop)]
+#[cfg(any(desktop, target_os = "ios"))]
 mod desktop;
-#[cfg(mobile)]
+#[cfg(target_os = "android")]
 mod mobile;
 
 mod commands;
@@ -16,32 +16,32 @@ mod models;
 
 pub use error::{Error, Result};
 
-#[cfg(desktop)]
-use desktop::OsKeystore;
-#[cfg(mobile)]
-use mobile::OsKeystore;
+#[cfg(any(desktop, target_os = "ios"))]
+use desktop::OsSecrets;
+#[cfg(target_os = "android")]
+use mobile::OsSecrets;
 
-/// Extensions to [`tauri::App`], [`tauri::AppHandle`] and [`tauri::Window`] to access the os-keystore APIs.
-pub trait OsKeystoreExt<R: Runtime> {
-  fn os_keystore(&self) -> &OsKeystore<R>;
+/// Extensions to [`tauri::App`], [`tauri::AppHandle`] and [`tauri::Window`] to access the os-secrets APIs.
+pub trait OsSecretsExt<R: Runtime> {
+  fn os_secrets(&self) -> &OsSecrets<R>;
 }
 
-impl<R: Runtime, T: Manager<R>> crate::OsKeystoreExt<R> for T {
-  fn os_keystore(&self) -> &OsKeystore<R> {
-    self.state::<OsKeystore<R>>().inner()
+impl<R: Runtime, T: Manager<R>> crate::OsSecretsExt<R> for T {
+  fn os_secrets(&self) -> &OsSecrets<R> {
+    self.state::<OsSecrets<R>>().inner()
   }
 }
 
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
-  Builder::new("os-keystore")
-    .invoke_handler(tauri::generate_handler![commands::store, commands::load])
+  Builder::new("os-secrets")
+    .invoke_handler(tauri::generate_handler![commands::set, commands::get, commands::remove])
     .setup(|app, api| {
-      #[cfg(mobile)]
-      let os_keystore = mobile::init(app, api)?;
-      #[cfg(desktop)]
-      let os_keystore = desktop::init(app, api)?;
-      app.manage(os_keystore);
+      #[cfg(target_os = "android")]
+      let os_secrets = mobile::init(app, api)?;
+      #[cfg(any(desktop, target_os = "ios"))]
+      let os_secrets = desktop::init(app, api)?;
+      app.manage(os_secrets);
       Ok(())
     })
     .build()

@@ -2,8 +2,9 @@
 
 Default permissions for the plugin
 
-- `allow-store`
-- `allow-load`
+- `allow-set`
+- `allow-get`
+- `allow-remove`
 
 ## Permission Table
 
@@ -17,25 +18,12 @@ Default permissions for the plugin
 <tr>
 <td>
 
-`os-keystore:allow-load`
+`os-secrets:allow-get`
 
 </td>
 <td>
 
-Enables the load command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`os-keystore:deny-load`
-
-</td>
-<td>
-
-Denies the load command without any pre-configured scope.
+Enables the get command without any pre-configured scope.
 
 </td>
 </tr>
@@ -43,25 +31,12 @@ Denies the load command without any pre-configured scope.
 <tr>
 <td>
 
-`os-keystore:allow-ping`
+`os-secrets:deny-get`
 
 </td>
 <td>
 
-Enables the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`os-keystore:deny-ping`
-
-</td>
-<td>
-
-Denies the ping command without any pre-configured scope.
+Denies the get command without any pre-configured scope.
 
 </td>
 </tr>
@@ -69,12 +44,12 @@ Denies the ping command without any pre-configured scope.
 <tr>
 <td>
 
-`os-keystore:allow-store`
+`os-secrets:allow-remove`
 
 </td>
 <td>
 
-Enables the store command without any pre-configured scope.
+Enables the remove command without any pre-configured scope.
 
 </td>
 </tr>
@@ -82,12 +57,38 @@ Enables the store command without any pre-configured scope.
 <tr>
 <td>
 
-`os-keystore:deny-store`
+`os-secrets:deny-remove`
 
 </td>
 <td>
 
-Denies the store command without any pre-configured scope.
+Denies the remove command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`os-secrets:allow-set`
+
+</td>
+<td>
+
+Enables the set command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`os-secrets:deny-set`
+
+</td>
+<td>
+
+Denies the set command without any pre-configured scope.
 
 </td>
 </tr>

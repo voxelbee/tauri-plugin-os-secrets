@@ -14,13 +14,19 @@ class Example(private val activity: Activity) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    fun store(key: String, value: String) {
+    fun set(key: String, value: String) {
         val editor = this.prefs.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
-    fun load(key: String): String? {
+    fun get(key: String): String? {
         return this.prefs.getString(key, "DEFAULT")
+    }
+
+    fun remove(key: String) {
+        val editor = this.prefs.edit()
+        editor.remove(key)
+        editor.apply()
     }
 }

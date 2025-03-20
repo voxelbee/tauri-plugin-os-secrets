@@ -295,34 +295,34 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "Enables the load command without any pre-configured scope.",
+          "description": "Enables the get command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-load"
+          "const": "allow-get"
         },
         {
-          "description": "Denies the load command without any pre-configured scope.",
+          "description": "Denies the get command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-load"
+          "const": "deny-get"
         },
         {
-          "description": "Enables the ping command without any pre-configured scope.",
+          "description": "Enables the remove command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-ping"
+          "const": "allow-remove"
         },
         {
-          "description": "Denies the ping command without any pre-configured scope.",
+          "description": "Denies the remove command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-ping"
+          "const": "deny-remove"
         },
         {
-          "description": "Enables the store command without any pre-configured scope.",
+          "description": "Enables the set command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-store"
+          "const": "allow-set"
         },
         {
-          "description": "Denies the store command without any pre-configured scope.",
+          "description": "Denies the set command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-store"
+          "const": "deny-set"
         },
         {
           "description": "Default permissions for the plugin",

@@ -1,8 +1,7 @@
-const COMMANDS: &[&str] = &["store", "load"];
+const COMMANDS: &[&str] = &["set", "get", "remove"];
 
 fn main() {
   tauri_plugin::Builder::new(COMMANDS)
     .android_path("android")
-    .ios_path("ios")
     .build();
 }

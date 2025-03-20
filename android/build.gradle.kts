@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.plugin.os-keystore"
+    namespace = "com.plugin.os-secrets"
     compileSdk = 34
 
     defaultConfig {

@@ -6,36 +6,38 @@ use tauri::{
 
 use crate::models::*;
 
-#[cfg(target_os = "ios")]
-tauri::ios_plugin_binding!(init_plugin_os_keystore);
-
-// initializes the Kotlin or Swift plugin classes
+// Only inits for andriod as we use the iOS functionality of keyring
 pub fn init<R: Runtime, C: DeserializeOwned>(
   _app: &AppHandle<R>,
   api: PluginApi<R, C>,
-) -> crate::Result<OsKeystore<R>> {
+) -> crate::Result<OsSecrets<R>> {
   #[cfg(target_os = "android")]
   let handle = api.register_android_plugin("", "ExamplePlugin")?;
-  #[cfg(target_os = "ios")]
-  let handle = api.register_ios_plugin(init_plugin_os_keystore)?;
-  Ok(OsKeystore(handle))
+  Ok(OsSecrets(handle))
 }
 
-/// Access to the os-keystore APIs.
-pub struct OsKeystore<R: Runtime>(PluginHandle<R>);
+/// Access to the os-secrets APIs.
+pub struct OsSecrets<R: Runtime>(PluginHandle<R>);
 
-impl<R: Runtime> OsKeystore<R> {
-  pub fn store(&self, payload: StoreRequest) -> crate::Result<()> {
+impl<R: Runtime> OsSecrets<R> {
+  pub fn set(&self, payload: SetRequest) -> crate::Result<()> {
     self
       .0
-      .run_mobile_plugin("store", payload)
+      .run_mobile_plugin("set", payload)
       .map_err(Into::into)
   }
 
-  pub fn load(&self, payload: LoadRequest) -> crate::Result<LoadResponse> {
+  pub fn get(&self, payload: GetRequest) -> crate::Result<GetResponse> {
     self
       .0
-      .run_mobile_plugin("load", payload)
+      .run_mobile_plugin("get", payload)
+      .map_err(Into::into)
+  }
+
+  pub fn remove(&self, payload: RemoveRequest) -> crate::Result<()> {
+    self
+      .0
+      .run_mobile_plugin("remove", payload)
       .map_err(Into::into)
   }
 }

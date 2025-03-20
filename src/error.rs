@@ -4,11 +4,9 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-  /// No entry found for the specfic key
-  NoEntry,
   /// The underlying platform failed with the error
   PlatformFailure(Box<dyn std::error::Error + Send + Sync>),
-  #[cfg(mobile)]
+  #[cfg(target_os = "android")]
   #[error(transparent)]
   PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),
 }

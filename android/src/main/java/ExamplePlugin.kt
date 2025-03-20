@@ -8,13 +8,18 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 
 @InvokeArg
-class StoreRequest {
+class SetRequest {
     var key: String? = null
     var value: String? = null
 }
 
 @InvokeArg
-class LoadRequest {
+class GetRequest {
+    var key: String? = null
+}
+
+@InvokeArg
+class RemoveRequest {
     var key: String? = null
 }
 
@@ -23,19 +28,27 @@ class ExamplePlugin(private val activity: Activity): Plugin(activity) {
     private val implementation = Example(activity)
 
     @Command
-    fun store(invoke: Invoke) {
-        val args = invoke.parseArgs(StoreRequest::class.java)
+    fun set(invoke: Invoke) {
+        val args = invoke.parseArgs(SetRequest::class.java)
 
-        implementation.store(args.key ?: "default key :(", args.value ?: "default value :(")
+        implementation.set(args.key ?: "default key :(", args.value ?: "default value :(")
         invoke.resolve()
     }
 
     @Command
-    fun load(invoke: Invoke) {
-        val args = invoke.parseArgs(LoadRequest::class.java)
+    fun get(invoke: Invoke) {
+        val args = invoke.parseArgs(GetRequest::class.java)
 
         val ret = JSObject()
-        ret.put("value", implementation.load(args.key ?: "default value :("))
+        ret.put("value", implementation.get(args.key ?: "default value :("))
         invoke.resolve(ret)
+    }
+
+    @Command
+    fun remove(invoke: Invoke) {
+        val args = invoke.parseArgs(RemoveRequest::class.java)
+
+        implementation.remove(args.key ?: "default value :(")
+        invoke.resolve()
     }
 }

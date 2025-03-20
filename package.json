@@ -1,5 +1,5 @@
 {
-  "name": "tauri-plugin-os-keystore-api",
+  "name": "tauri-plugin-os-secrets-api",
   "version": "0.1.0",
   "author": "You",
   "description": "",
